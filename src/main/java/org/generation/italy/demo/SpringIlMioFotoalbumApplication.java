@@ -68,7 +68,7 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 		String url3 = "https://www.montagnaestate.it/wp-content/uploads/DSC_0958-scaled.jpg";
 		String url4 = "https://cdn.shopify.com/s/files/1/0876/3834/products/happybirthday2_1024x1024.jpg?v=1605801007";
 		
-		Foto f1 = new Foto("Il Natale più bello di sempre", "Descrizione del mio Natael", url1, "#MyChristmas, #HappyNewYear", true, categories1);
+		Foto f1 = new Foto("Il Natale più bello di sempre", "Descrizione del mio Natale", url1, "#MyChristmas, #HappyNewYear", true, categories1);
 		Foto f2 = new Foto("L'estate più bella della mia vita", "Descrizione della mia estate", url2, "#MySummer", true, categories2);
 		Foto f3 = new Foto("Giornata in montagna", "Descrizione della mia giornata in montagna", url3, "#MyWinter, #Nature", false);
 		Foto f4 = new Foto("Il mio compleanno", "Descrizione della mio compleanno", url4, "#MyBirthday", true, categories3);
@@ -85,12 +85,12 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 		Role r1 = new Role("USER");
 		Role r2 = new Role("ADMIN");
 		
+		roleService.save(r1);
+		roleService.save(r2);
+		
 		Set<Role> roles = new HashSet<>();
 		roles.add(r1);
 		roles.add(r2);
-		
-		roleService.save(r1);
-		roleService.save(r2);
 		
 		User user = new User("user", "{noop}userpsw", r1);
 		User admin = new User("admin", "{noop}adminpsw", r2);

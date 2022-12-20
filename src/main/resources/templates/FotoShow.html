@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<!-- Bootstrap CSS -->
+    <link th:rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
+
+</head>
+<body th:object="${photo}" class="text-center pb-3">
+   
+   <div th:replace="Frag :: show()"></div>
+   <div class="p-4" th:if="*{categories}">
+           <h3>Categorie:</h3>
+          <h4 th:each="category : *{categories}" th:object="${category}">[[*{name}]]</h4>
+          <h4 th:if="*{categories.size() < 1}">Non sono presenti categorie per questa foto</h4>
+   </div>
+   
+   <button class="btn btn-success">
+       <a style="text-decoration: none" class="text-white ms_text_decoration" href="/photo/user">HomePage foto</a>
+   </button>
+   <button class="btn btn-warning">
+       <a style="text-decoration: none" class="text-dark ms_text_decoration" 
+          th:href="@{/photo/admin/edit/{id} (id=*{id})}" sec:authorize="hasAuthority('ADMIN')">Modifica il tuo post</a>
+   </button>
+   <button class="btn btn-danger">
+       <a style="text-decoration: none" class="text-white ms_text_decoration"  
+          th:href="@{/photo/admin/delete/{id} (id=*{id})}" sec:authorize="hasAuthority('ADMIN')">Elimina</a>
+   </button>
+   <button class="btn btn-primary">
+       <a style="text-decoration: none" class="text-white" href="/photo/user/search" sec:authorize="hasAuthority('USER')">Torna alla ricerca del tuo post</a>
+   </button>
+</body>
+</html>

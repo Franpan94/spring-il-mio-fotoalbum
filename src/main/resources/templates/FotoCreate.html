@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<!-- Bootstrap CSS -->
+    <link th:rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
+
+</head>
+<body class="pt-3">
+   <h1 class="text-center">Crea il tuo post</h1>
+   
+   <div th:replace="Frag :: errors()"></div>
+	
+   <div class="container">
+      <div class="row">
+         <div class="col">
+             <form method="POST" th:action="@{/photo/admin/store}" th:object="${photo}">
+                <div th:replace="Frag :: form()"></div>
+                
+	            <label class="pt-3 pb-2">Categorie:</label><br>
+                <div th:each="category : ${categories}"
+                     th:object="${category}"
+                     class="mb-3"
+                >
+                   <input type="checkbox" 
+                          name="categories"
+                          th:value="*{id}" 
+                          th:field="${photo.categories}"
+                   >             
+                   <label>[[*{name}]]</label>
+                   
+                </div>
+                <div class="pt-3 pb-3 text-center">
+                   <button type="submit" class="btn btn-primary text-white">Aggiungi</button>
+                   <button class="btn btn-success text-white"> 
+                      <a style="text-decoration: none" href="/photo/user" class="text-white">HomePage foto</a>
+                  </button>
+                </div>
+              </form>
+          </div>
+      </div>
+   </div>
+</body>
+</html>

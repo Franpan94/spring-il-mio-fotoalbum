@@ -38,7 +38,7 @@ public class Foto {
 	@Column
 	private String url;
 	
-	@NotEmpty(message = "I tag deve contenere qualcosa")
+	@NotEmpty(message = "Il campo tag deve contenere qualcosa")
 	@Size(min = 3, message = "I tag devono contenere almeno 3 caratteri")
 	@Column
 	private String tag;
