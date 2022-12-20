@@ -27,6 +27,7 @@ public class FotoService {
     	
     	return fotoRepo.findAll();
     }
+   
     
     public Foto findById(int id) {
     	

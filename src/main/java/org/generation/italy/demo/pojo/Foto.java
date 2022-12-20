@@ -1,10 +1,15 @@
 package org.generation.italy.demo.pojo;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -28,8 +33,8 @@ public class Foto {
 	@Column
 	private String description;
 	
-	@NotEmpty(message = "L'url deve contenere qualcosa")
-	@Size(min = 5, message = "L'url deve contenere almeno 5 caratteri")
+	@NotEmpty(message = "L'immagine deve contenere qualcosa")
+	@Size(min = 5, message = "L' immagine deve contenere almeno 5 caratteri")
 	@Column
 	private String url;
 	
@@ -42,6 +47,10 @@ public class Foto {
     @Column
     private boolean visible;
 	
+	@ManyToMany
+	@JsonIgnore
+	List<Category> categories;
+
 	public Foto() {
 		
 	}
@@ -52,6 +61,12 @@ public class Foto {
 		setUrl(url);
 		setTag(tag);
 		setVisible(visible);
+	}
+	
+	public Foto(String title, String description, String url, String tag,
+			    boolean visible, List<Category> categories) {
+		this(title, description, url, tag, visible);
+		setCategories(categories);
 	}
 
 	public int getId() {
@@ -102,8 +117,16 @@ public class Foto {
 		this.visible = visible;
 	}
 	
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+	
 	@Override
 	public String toString() {
-		return "id: " + getId() + "titolo: " + getTitle() + "visibilità: " + isVisible();
+		return "\nid: " + getId() + "\ntitolo: " + getTitle() + "\nvisibilità: " + isVisible();
 	}
 }
