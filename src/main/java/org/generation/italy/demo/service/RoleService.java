@@ -3,7 +3,9 @@ package org.generation.italy.demo.service;
 import org.generation.italy.demo.pojo.Role;
 import org.generation.italy.demo.repo.RoleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RoleService {
 
 	@Autowired

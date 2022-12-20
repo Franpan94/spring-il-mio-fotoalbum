@@ -1,12 +1,18 @@
 package org.generation.italy.demo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.generation.italy.demo.pojo.Category;
 import org.generation.italy.demo.pojo.Foto;
+import org.generation.italy.demo.pojo.Role;
+import org.generation.italy.demo.pojo.User;
 import org.generation.italy.demo.service.CategoryService;
 import org.generation.italy.demo.service.FotoService;
+import org.generation.italy.demo.service.RoleService;
+import org.generation.italy.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,6 +26,12 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 	
 	@Autowired 
 	private CategoryService categoryService;
+	
+	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
+	private UserService userService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringIlMioFotoalbumApplication.class, args);
@@ -69,6 +81,25 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner {
 		System.err.println("-----------------------------------------------\nCategorie per foto" + categoryService.findAllWithFoto());
 		
 		System.err.println("-----------------------------------------------");
+		
+		Role r1 = new Role("USER");
+		Role r2 = new Role("ADMIN");
+		
+		Set<Role> roles = new HashSet<>();
+		roles.add(r1);
+		roles.add(r2);
+		
+		roleService.save(r1);
+		roleService.save(r2);
+		
+		User user = new User("user", "{noop}userpsw", r1);
+		User admin = new User("admin", "{noop}adminpsw", r2);
+		User superadmin = new User("superadmin", "{noop}superadminpsw", roles);
+		
+		userService.save(user);
+		userService.save(admin);
+		userService.save(superadmin);
+		
 	}
 
 }
