@@ -21,7 +21,29 @@
                         </span>
                     </div>
                 </div>
-           
+                
+
+                <div v-if="photo.comments" class="fs-4">
+                    <div v-if="photo.comments.length < 1">
+                        <span>Commenti non presenti</span>
+                    </div>
+                    <div v-else>
+                        <span class="pt-2">Commenti: </span>
+                        <span v-for="comment in photo.comments" :key="comment.id">
+                           {{ comment.text }},
+                        </span>
+                    </div>
+                </div>
+                
+                <button @click="commentPhoto(photo.id)" v-if="photo.id !== photo_id">Commenta</button>
+                <div v-else>
+                    <input type="text" placeholder="Inserisci commento" name="text" v-model.trim="comment_create.text">
+                    <div>
+                        <button class="btn btn-success" @click="createNewComment(photo.id)">Aggiungi nuovo commento</button>
+                        <button class="btn btn-danger" @click="photo_id = -1">Annulla</button>
+                    </div>
+                </div>
+                
 
                 <div class="pt-2" v-if="photo.visible">
                     <h4>Disponibile</h4>
@@ -41,6 +63,8 @@ import axios from 'axios';
 
 const API_URL_PHOTO = 'http://localhost:8080/api/foto';
 
+const API_URL_COMMENT = 'http://localhost:8080/api/comments';
+
 export default {
 
   name: 'MainComponent',
@@ -50,7 +74,9 @@ export default {
     return {
 
         photos: [],
-        query: ''
+        query: '',
+        comment_create: {},
+        photo_id: -1
     }
   },
 
@@ -61,9 +87,39 @@ export default {
             
             const photos = result.data;
             
-            if(photos == null) return
+            if(photos === null) return
 
             this.photos = photos;
+        })
+    },
+
+    getPhotoIndexById(id){
+        for(let i=0; i< this.photos.length; i++){
+            const photo = this.photos[i];
+            if(photo.id === id) return i;
+        }
+    },
+
+    
+
+    commentPhoto(id){
+        this.photo_id = id;
+        console.log(this.photo_id);
+    },
+
+    createNewComment(photoId){
+        axios.post(API_URL_COMMENT + '/add/byPhoto/' + photoId, this.comment_create).then(result => {
+            const comment = result.data;
+
+            if(comment === null) return;
+          
+            const index = this.getPhotoIndexById(photoId);
+
+            const photo = this.photos[index];
+
+             photo.comments.push(comment);
+
+             this.comment_create = '';
         })
     }
   },

@@ -7,9 +7,11 @@ import org.generation.italy.demo.pojo.Foto;
 import org.generation.italy.demo.service.CommentService;
 import org.generation.italy.demo.service.FotoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +19,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/comments")
+@CrossOrigin("*")
 public class CommentApiController {
 
 	@Autowired
@@ -33,8 +36,8 @@ public class CommentApiController {
 		return comments;
 	}
 	
-	@PostMapping("/add/{id}")
-	public Comment addCommentPhoto(@PathVariable("id") int id, @Valid Comment comment) {
+	@PostMapping("/add/byPhoto/{id}")
+	public Comment addCommentPhoto(@PathVariable("id") int id, @Valid @RequestBody Comment comment) {
 		
 		Foto f = fotoService.findById(id);
 		
