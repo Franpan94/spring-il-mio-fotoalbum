@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -47,6 +48,9 @@ public class Foto {
 	
 	@ManyToMany
 	private List<Category> categories;
+	
+	@OneToMany(mappedBy = "photo")
+	List<Comment> comments;
 
 	public Foto() {
 		
@@ -80,6 +84,14 @@ public class Foto {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 	public String getTitle() {

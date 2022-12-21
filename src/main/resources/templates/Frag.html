@@ -54,7 +54,8 @@
       <h3 class="pt-3">Descrizione:</h3>
       <span>[[*{description}]]</span>
       <h4 class="pt-4">Tag: [[*{tag}]]</h4> 
-      <h5 class="pt-3">Disponibilita': [[*{visible}]]</h5>
+      <h4 class="pt-3" th:if="*{visible}">Disponibile</h4>
+      <h4 class="pt-3" th:unless="*{visible}">Non disponibile</h4>
 	</div>
    
    <div th:fragment="form()">

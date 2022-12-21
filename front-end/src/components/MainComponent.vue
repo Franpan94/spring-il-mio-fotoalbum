@@ -7,17 +7,21 @@
             <div class="col-12 p-4" v-for="photo in photos" :key="photo.id">
                 <h3>{{ photo.title }}</h3>
                 <img :src="photo.url" alt="img" class="w-50">
-                <h4 class="pt-2">Descrizione:</h4>
-                <h4>{{ photo.description }}</h4>
-                <h4 class="pt-2">Tag:</h4>
-                <h4>{{ photo.tag }}</h4>
+                <h4 class="pt-2">Descrizione: {{ photo.description }}</h4>
+                <h4 class="pt-2">Tag: {{ photo.tag }}</h4>
                 
-                <div v-if="photo.categories">
-                    <h4 class="pt-2">Categorie: </h4>
-                   <h4 v-for="category in photo.categories" :key="category.id">
-                      {{ category.name }}
-                   </h4>
+                <div v-if="photo.categories" class="fs-4">
+                    <div v-if="photo.categories.length < 1">
+                        <span>Categorie non presenti</span>
+                    </div>
+                    <div v-else>
+                        <span class="pt-2">Categorie: </span>
+                        <span v-for="category in photo.categories" :key="category.id">
+                           {{ category.name }},
+                        </span>
+                    </div>
                 </div>
+           
 
                 <div class="pt-2" v-if="photo.visible">
                     <h4>Disponibile</h4>
