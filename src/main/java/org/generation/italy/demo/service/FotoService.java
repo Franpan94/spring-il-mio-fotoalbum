@@ -38,4 +38,9 @@ public class FotoService {
     	
     	fotoRepo.deleteById(id);
     }
+    
+    public List<Foto> findByTitleOrTag(String title, String tag) {
+    	
+    	return fotoRepo.findByTitleContainingIgnoreCaseOrTagContaining(title, tag);
+    }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
@@ -143,5 +144,21 @@ public class PhotoController {
 		}
 		
 		return "redirect:/photo/user";
+	}
+	
+	@GetMapping("/photo/user/search")
+	public String search(Model model, 
+			             @RequestParam(name = "name", required = false) String query ) {
+		
+		List<Foto> photos = null;
+		
+		if(query == null) photos = fotoService.findAll();
+		else photos = fotoService.findByTitleOrTag(query, query);
+		
+		model.addAttribute("photos", photos);
+			
+		
+		return "FotoSearch";
+		
 	}
 }
