@@ -125,6 +125,17 @@ public class Foto {
 		this.categories = categories;
 	}
 	
+    public void addCategories(Category category) {
+		
+		boolean finded = false;
+		for (Category c : getCategories()) 
+			if (c.getId() == category.getId())
+				finded = true;
+		
+		if (!finded) 
+			getCategories().add(category);
+	}
+	
 	@Override
 	public String toString() {
 		return "\nid: " + getId() + "\ntitolo: " + getTitle() + "\nvisibilità: " + isVisible();

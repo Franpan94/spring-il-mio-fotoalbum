@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<!-- Bootstrap CSS -->
+    <link th:rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
+
+</head>
+<body>
+
+   <div th:replace="frag :: errors()"></div>
+
+<h1 class="text-center p-3">Categorie</h1>
+<div class="text-center pb-3">
+      Logged user: <span sec:authentication="name">Bob</span>
+      Roles: <span sec:authentication="principal.authorities">[USER, ADMIN]</span>
+</div>
+<div class="text-center pb-3">
+      <button class="btn btn-primary">
+        <a style="text-decoration: none" class="text-white" href="/category/admin/create"
+           sec:authorize="hasAuthority('ADMIN')">Aggiungi le tue nuove categorie
+        </a>
+      </button>
+   </div>
+   <div class="container">
+      <div class="row">
+         <div class="col">
+            <table class="table table-dark table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Categorie</th>
+                  <th scope="col" class="text-center">Foto</th>
+                  <th scope="col" class="text-end">Modifica/Elimina</th>
+                </tr>
+              </thead>
+              <tbody>
+                 <tr th:each="category : ${categories}" th:object="${category}">
+                    <th scope="row">[[*{id}]]</th>
+                    <td>
+                       <span>[[*{name}]]</span>
+                    </td>
+                    <td class="text-center">
+						<span class="text-center" 
+						      th:each="photo : ${category.fotos}"
+						>  [[${photo.title}]], 
+						</span>
+						<span class="text-danger" th:if="${category.fotos.size < 1}">Non sono presenti foto per questo tag</span>
+					</td>			
+                    <td class="text-end">
+                       <button class="btn btn-warning">
+                         <a style="text-decoration: none" class="text-dark ms_text_decoration" 
+                            th:href="@{/category/admin/edit/{id} (id=*{id})}"
+                            sec:authorize="hasAuthority('ADMIN')">Modifica le tue categorie</a>
+                       </button>
+                       <button class="btn btn-danger">
+                         <a style="text-decoration: none" class="text-white ms_text_decoration" 
+                            th:href="@{/category/admin/delete/{id} (id=*{id})}"
+                            sec:authorize="hasAuthority('ADMIN')">Elimina</a>
+                       </button>
+                     </td>
+                     
+                 </tr>
+               </tbody>  
+           </table>
+              <h4 class="p-5 text-center" th:if="${categories.size() < 1}">Non sono presenti categorie al momento</h4>
+           
+         </div>
+      </div>
+   </div>
+   <div class="d-flex justify-content-around p-3">
+
+        <button class="btn btn-dark">
+          <a style="text-decoration: none" class="text-white" href="/">Home</a>
+        </button>
+     
+        <button th:replace="Frag :: logout()"></button>
+
+   </div>
+</body>
+</html>
