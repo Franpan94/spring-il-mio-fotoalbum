@@ -4,54 +4,64 @@
     <div class="container">
         <div class="row text-center ">
             <h1>Post</h1>
-            <div class="col-12 p-4" v-for="photo in photos" :key="photo.id">
-                <h3>{{ photo.title }}</h3>
-                <img :src="photo.url" alt="img" class="w-50">
-                <h4 class="pt-2">Descrizione: {{ photo.description }}</h4>
-                <h4 class="pt-2">Tag: {{ photo.tag }}</h4>
-                
-                <div v-if="photo.categories" class="fs-4">
-                    <div v-if="photo.categories.length < 1">
-                        <span>Categorie non presenti</span>
+            <div>
+                <input type="text" v-model.trim="query" @keyup="search()">
+                <button @click="search()">Cerca</button>
+            </div>
+            <div v-if="photos.length > 0">
+                <div class="col-12 p-4" v-for="photo in photos" :key="photo.id">
+                    <h3>{{ photo.title }}</h3>
+                    <img :src="photo.url" alt="img" class="w-50">
+                    <h4 class="pt-2">Descrizione: {{ photo.description }}</h4>
+                    <h4 class="pt-2">Tag: {{ photo.tag }}</h4>
+                    
+                    <div v-if="photo.categories" class="fs-4">
+                        <div v-if="photo.categories.length < 1">
+                            <span>Categorie non presenti</span>
+                        </div>
+                        <div v-else>
+                            <span class="pt-2">Categorie: </span>
+                            <span v-for="category in photo.categories" :key="category.id">
+                            {{ category.name }},
+                            </span>
+                        </div>
+                    </div>
+                    
+
+                    <div v-if="photo.comments" class="fs-4">
+                        <div v-if="photo.comments.length < 1">
+                            <span>Commenti non presenti</span>
+                        </div>
+                        <div v-else>
+                            <span class="pt-2">Commenti: </span>
+                            <span v-for="comment in photo.comments" :key="comment.id">
+                            {{ comment.text }},
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-2">
+                        <button @click="commentPhoto(photo.id)" v-if="photo.id !== photo_id" class="btn btn-primary">Commenta</button>
+                        <div v-else>
+                        <input type="text" placeholder="Inserisci commento" name="text" v-model.trim="comment_create.text">
+                            <div>
+                            <button class="btn btn-success" @click="createNewComment(photo.id)">Aggiungi nuovo commento</button>
+                            <button class="btn btn-danger" @click="photo_id = -1">Annulla</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+
+                    <div class="pt-2" v-if="photo.visible">
+                        <h4>Disponibile</h4>
                     </div>
                     <div v-else>
-                        <span class="pt-2">Categorie: </span>
-                        <span v-for="category in photo.categories" :key="category.id">
-                           {{ category.name }},
-                        </span>
+                        <h4 class="pt-2">Non disponibile</h4>
                     </div>
-                </div>
-                
-
-                <div v-if="photo.comments" class="fs-4">
-                    <div v-if="photo.comments.length < 1">
-                        <span>Commenti non presenti</span>
-                    </div>
-                    <div v-else>
-                        <span class="pt-2">Commenti: </span>
-                        <span v-for="comment in photo.comments" :key="comment.id">
-                           {{ comment.text }},
-                        </span>
-                    </div>
-                </div>
-                
-                <button @click="commentPhoto(photo.id)" v-if="photo.id !== photo_id">Commenta</button>
-                <div v-else>
-                    <input type="text" placeholder="Inserisci commento" name="text" v-model.trim="comment_create.text">
-                    <div>
-                        <button class="btn btn-success" @click="createNewComment(photo.id)">Aggiungi nuovo commento</button>
-                        <button class="btn btn-danger" @click="photo_id = -1">Annulla</button>
-                    </div>
-                </div>
-                
-
-                <div class="pt-2" v-if="photo.visible">
-                    <h4>Disponibile</h4>
-                </div>
-                <div v-else>
-                    <h4 class="pt-2">Non disponibile</h4>
                 </div>
             </div>
+            <div v-else>La ricerca non ha prodotto risultati</div>
         </div>
     </div>
   </main>
@@ -118,9 +128,21 @@ export default {
             const photo = this.photos[index];
 
              photo.comments.push(comment);
+             console.log(photo.comments);
 
              this.comment_create = '';
         })
+    },
+
+    search(){
+      if(this.query === null) this.getPhotos;
+      axios.get(API_URL_PHOTO + '/search/' + this.query).then(result => {
+        const photos = result.data;
+
+        if(photos === null) return;
+
+        this.photos = photos;
+      })
     }
   },
 
