@@ -10,7 +10,7 @@
                 <button class="btn btn-primary" @click="search()">Cerca</button>
             </div>
             <div v-if="photos.length > 0">
-                <div class="col-12 p-4" v-for="photo in photos" :key="photo.id">
+                <div class="col-12 p-4" v-for="photo in photos" :key="photo.id" :class="photo.visible ? '' : 'd-none'">
                     <h3>{{ photo.title }}</h3>
                     <img :src="photo.url" alt="img" class="w-50">
                     <h4 class="pt-2">Descrizione: {{ photo.description }}</h4>
