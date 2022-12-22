@@ -2,11 +2,12 @@
   <main>
     
     <div class="container">
-        <div class="row text-center ">
+        <div class="row text-center pt-4">
             <h1>Post</h1>
-            <div>
-                <input type="text" v-model.trim="query" @keyup="search()">
-                <button @click="search()">Cerca</button>
+            <div class="d-flex">
+                <input type="text" v-model.trim="query" @keyup.enter="search()" 
+                    class="form-control" placeholder="Ricerca il tuo post">
+                <button class="btn btn-primary" @click="search()">Cerca</button>
             </div>
             <div v-if="photos.length > 0">
                 <div class="col-12 p-4" v-for="photo in photos" :key="photo.id">
@@ -26,42 +27,43 @@
                             </span>
                         </div>
                     </div>
-                    
+
+                    <div class="pt-2" v-if="photo.visible">
+                        <h4>Post: Disponibile</h4>
+                    </div>
+                    <div v-else>
+                        <h4 class="pt-2">Post: Non disponibile</h4>
+                    </div>
 
                     <div v-if="photo.comments" class="fs-4">
                         <div v-if="photo.comments.length < 1">
                             <span>Commenti non presenti</span>
                         </div>
                         <div v-else>
-                            <span class="pt-2">Commenti: </span>
-                            <span v-for="comment in photo.comments" :key="comment.id">
-                            {{ comment.text }},
-                            </span>
+                            <h4 class="pt-2" v-for="comment in photo.comments" :key="comment.id">
+                               Commenti: {{ comment.text }}
+                            </h4>
                         </div>
                     </div>
                     
                     <div class="pt-2">
                         <button @click="commentPhoto(photo.id)" v-if="photo.id !== photo_id" class="btn btn-primary">Commenta</button>
                         <div v-else>
-                        <input type="text" placeholder="Inserisci commento" name="text" v-model.trim="comment_create.text">
-                            <div>
-                            <button class="btn btn-success" @click="createNewComment(photo.id)">Aggiungi nuovo commento</button>
-                            <button class="btn btn-danger" @click="photo_id = -1">Annulla</button>
+                            <input type="text" @keyup.enter="createNewComment(photo.id)" class="form-control"
+                               placeholder="Inserisci commento" name="text" v-model.trim="comment_create.text"
+                            >
+                            <div class="pt-3 d-flex justify-content-around">
+                               <button class="btn btn-success" @click="createNewComment(photo.id)">Aggiungi nuovo commento</button>
+                               <button class="btn btn-danger" @click="photo_id = -1">Annulla</button>
                             </div>
                         </div>
                     </div>
                     
-                    
-
-                    <div class="pt-2" v-if="photo.visible">
-                        <h4>Disponibile</h4>
-                    </div>
-                    <div v-else>
-                        <h4 class="pt-2">Non disponibile</h4>
-                    </div>
                 </div>
             </div>
-            <div v-else>La ricerca non ha prodotto risultati</div>
+            <div v-else class="pt-3">
+                <h4>La ricerca non ha prodotto risultati</h4>
+            </div>
         </div>
     </div>
   </main>
@@ -85,7 +87,7 @@ export default {
 
         photos: [],
         query: '',
-        comment_create: {},
+        comment_create: {text: ''},
         photo_id: -1
     }
   },
@@ -130,12 +132,12 @@ export default {
              photo.comments.push(comment);
              console.log(photo.comments);
 
-             this.comment_create = '';
+             this.comment_create.text = '';
         })
     },
 
     search(){
-      if(this.query === null) this.getPhotos;
+      if(this.query === null) return this.getPhotos
       axios.get(API_URL_PHOTO + '/search/' + this.query).then(result => {
         const photos = result.data;
 

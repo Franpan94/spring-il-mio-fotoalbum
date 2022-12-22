@@ -11,7 +11,7 @@
 <body th:object="${photo}" class="text-center pb-3">
    
    <div th:replace="Frag :: show()"></div>
-   <div class="p-4" th:if="*{categories}">
+   <div class="p-3" th:if="*{categories}">
            <h3>Categorie:</h3>
           <h4 th:each="category : *{categories}" th:object="${category}">[[*{name}]]</h4>
           <h4 th:if="*{categories.size() < 1}">Non sono presenti categorie per questa foto</h4>

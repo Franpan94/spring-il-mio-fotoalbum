@@ -2,6 +2,7 @@ package org.generation.italy.demo.pojo;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -49,7 +50,7 @@ public class Foto {
 	@ManyToMany
 	private List<Category> categories;
 	
-	@OneToMany(mappedBy = "photo")
+	@OneToMany(mappedBy = "photo", cascade = CascadeType.REMOVE)
 	List<Comment> comments;
 
 	public Foto() {

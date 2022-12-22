@@ -10,43 +10,17 @@
 </head>
 <body>
    
-   <div class="container" th:fragment="photos(pts)">
-      <div class="row">
-         <div class="col">
-            <table class="table table-dark table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Id</th>
-                  <th scope="col">Titolo</th>
-                  <th scope="col" class="text-end">Modifica/Elimina</th>
-                </tr>
-              </thead>
-              <tbody>
-                 <tr th:each="photo : ${pts}" th:object="${photo}">
-                    <th scope="row">[[*{id}]]</th>
-                    <td>
-                       <a class="pb-3" 
-                          style="text-decoration: none"
-                          th:href="@{/photo/user/{id} (id=*{id})}">[[*{title}]]
-                       </a>
-                    </td>
-                    <td class="text-end">
-                       <button class="btn btn-warning">
-                         <a style="text-decoration: none" class="text-dark ms_text_decoration" 
-                            th:href="@{/photo/admin/edit/{id} (id=*{id})}" sec:authorize="hasAuthority('ADMIN')">Modifica la tua foto
-                         </a>
-                       </button>
-                       <button class="btn btn-danger">
-                         <a style="text-decoration: none" class="text-white ms_text_decoration" 
-                            th:href="@{/photo/admin/delete/{id} (id=*{id})}" sec:authorize="hasAuthority('ADMIN')">Elimina</a>
-                       </button>
-                     </td>
-                 </tr>
-               </tbody>  
-           </table>
-         </div>
-      </div>
-   </div>
+   <td class="text-end" th:fragment="buttons()">
+       <button class="btn btn-warning">
+           <a style="text-decoration: none" class="text-dark ms_text_decoration" 
+              th:href="@{/photo/admin/edit/{id} (id=*{id})}" sec:authorize="hasAuthority('ADMIN')">Modifica la tua foto
+           </a>
+        </button>
+        <button class="btn btn-danger">
+           <a style="text-decoration: none" class="text-white ms_text_decoration" 
+              th:href="@{/photo/admin/delete/{id} (id=*{id})}" sec:authorize="hasAuthority('ADMIN')">Elimina</a>
+         </button>
+     </td>
    
    <div th:fragment="show()">
 	  <h1 class="text-center p-3">[[*{title}]]</h1>

@@ -27,7 +27,35 @@
          </a>
      </button>
    </div>
-   <div th:replace= "Frag :: photos (${photos})" ></div>
+   
+   <div class="container">
+      <div class="row">
+         <div class="col">
+            <table class="table table-dark table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Titolo</th>
+                  <th scope="col" class="text-end">Modifica/Elimina</th>
+                </tr>
+              </thead>
+              <tbody>
+                 <tr th:each="photo : ${photos}" th:object="${photo}">
+                    <th scope="row">[[*{id}]]</th>
+                    <td>
+                       <a class="pb-3" 
+                          style="text-decoration: none"
+                          th:href="@{/photo/user/{id} (id=*{id})}">[[*{title}]]
+                       </a>
+                    </td>
+                    <td th:replace="Frag :: buttons()"></td>
+                 </tr>
+               </tbody>  
+           </table>
+         </div>
+      </div>
+   </div>
+   
    <h4 class="p-5 text-center" th:if="${photos.size() < 1}">Non sono presenti foto al momento</h4>
    <div class="pb-2 d-flex justify-content-around">
       <button class="btn btn-dark">

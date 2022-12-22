@@ -16,9 +16,9 @@
              <h1 class="text-center">Ricerca la tua foto preferita!</h1>
              <form method="GET" th:action="@{/photo/user/search}">
 		         
-		         <label for="exampleInputEmail1" class="form-label">Nome</label>
+		         <label for="exampleInputEmail1" class="form-label">Titolo o tag</label>
 		         <input type="text" name="name" class="form-control" id="exampleInputEmail1" 
-                        aria-describedby="emailHelp" th:value="${name}"
+                        aria-describedby="emailHelp" th:value="${name}" 
                  >
                  <div class="pt-4 pb-4">
 	                <button type="submit" class="btn btn-dark text-white">Cerca</button>
@@ -26,7 +26,37 @@
 	                   <a style="text-decoration: none" class="text-white" href="/photo/user">HomePage foto</a>
 	                </button>
 	             </div>
-	             <div class="class="pt-4"" th:replace= "frag :: photos (${photos})" ></div>
+	             <div class="container">
+				      <div class="row">
+				         <div class="col">
+				            <table class="table table-dark table-hover">
+				              <thead>
+				                <tr>
+				                  <th scope="col">Id</th>
+				                  <th scope="col">Titolo</th>
+				                  <th scope="col">Tag</th>
+				                  <th scope="col" class="text-end">Modifica/Elimina</th>
+				                </tr>
+				              </thead>
+				              <tbody>
+				                 <tr th:each="photo : ${photos}" th:object="${photo}">
+				                    <th scope="row">[[*{id}]]</th>
+				                    <td>
+				                       <a class="pb-3" 
+				                          style="text-decoration: none"
+				                          th:href="@{/photo/user/{id} (id=*{id})}">[[*{title}]]
+				                       </a>
+				                    </td>
+				                    <td>
+				                       <span class="pb-3">[[*{tag}]]</span>
+				                    </td>
+				                    <td th:replace="Frag :: buttons()"></td>
+				                 </tr>
+				               </tbody>  
+				           </table>
+				         </div>
+				      </div>
+                   </div>
 	
 	          </form>
     

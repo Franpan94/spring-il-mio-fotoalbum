@@ -21,6 +21,7 @@
                
                <div th:replace="Frag :: form()"></div>
 	           
+	           <label class="pt-2 pb-2">Categorie:</label><br>
 	           <div th:each="category : ${categories}"
                     th:object="${category}"
                     class="mb-3"

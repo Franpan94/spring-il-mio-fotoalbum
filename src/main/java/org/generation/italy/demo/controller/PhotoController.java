@@ -35,7 +35,7 @@ public class PhotoController {
 		return "Home";
 	}
 	
-	@GetMapping("/photo/user")
+	@GetMapping("photo/user")
 	public String getPhotos(Model model) {
 		
 		List<Foto> photos = fotoService.findAll();
@@ -44,7 +44,7 @@ public class PhotoController {
 		return "FotoIndex";
 	}
 	
-	@GetMapping("/photo/user/{id}")
+	@GetMapping("photo/user/{id}")
 	public String show(@PathVariable("id") int id, Model model) {
 		
 		Foto photo = fotoService.findById(id);
@@ -53,7 +53,7 @@ public class PhotoController {
 		return "FotoShow";
 	}
 	
-	@GetMapping("/photo/admin/create")
+	@GetMapping("photo/admin/create")
 	public String create(Model model) {
 		
 		Foto photo = new Foto();
@@ -65,7 +65,7 @@ public class PhotoController {
 		return "FotoCreate";
 	}
 	
-	@PostMapping("/photo/admin/store")
+	@PostMapping("photo/admin/store")
 	public String store(@Valid @ModelAttribute("photo") Foto photo,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
@@ -90,7 +90,7 @@ public class PhotoController {
 		return "redirect:/photo/user";
 	}
 	
-	@GetMapping("/photo/admin/edit/{id}")
+	@GetMapping("photo/admin/edit/{id}")
 	public String edit(@PathVariable("id") int id, Model model) {
 		
 		Foto photo = fotoService.findById(id);
@@ -103,7 +103,7 @@ public class PhotoController {
 	}
 	
 
-	@PostMapping("/photo/admin/update")
+	@PostMapping("photo/admin/update")
 	public String update(@Valid Foto photo,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
@@ -128,7 +128,7 @@ public class PhotoController {
 		return "redirect:/photo/user";
 	}
 	
-	@GetMapping("/photo/admin/delete/{id}")
+	@GetMapping("photo/admin/delete/{id}")
 	public String delete(@PathVariable("id") int id, 
 			             RedirectAttributes redirectAttributes) {
 		
@@ -146,7 +146,7 @@ public class PhotoController {
 		return "redirect:/photo/user";
 	}
 	
-	@GetMapping("/photo/user/search")
+	@GetMapping("photo/user/search")
 	public String search(Model model, 
 			             @RequestParam(name = "name", required = false) String query ) {
 		
