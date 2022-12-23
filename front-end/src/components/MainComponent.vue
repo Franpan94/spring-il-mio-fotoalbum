@@ -120,6 +120,7 @@ export default {
     },
 
     createNewComment(photoId){
+        if(this.comment_create.text === '') return
         axios.post(API_URL_COMMENT + '/add/byPhoto/' + photoId, this.comment_create).then(result => {
             const comment = result.data;
 
