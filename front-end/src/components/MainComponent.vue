@@ -137,7 +137,7 @@ export default {
     },
 
     search(){
-      if(this.query === null) return this.getPhotos();
+      if(this.query === '') return this.getPhotos();
       axios.get(API_URL_PHOTO + '/search/' + this.query).then(result => {
         const photos = result.data;
 
