@@ -4,11 +4,24 @@
     <div class="container">
         <div class="row text-center pt-4">
             <h1>Post</h1>
-            <div class="d-flex">
-                <input type="text" v-model.trim="query" @keyup.enter="search()" 
-                    class="form-control" placeholder="Ricerca il tuo post">
-                <button class="btn btn-primary" @click="search()">Cerca</button>
+
+            <div v-if="!create_search">
+               <button class="btn btn-primary" @click="create_search = true">
+                   Ricerca
+               </button>
             </div>
+               
+            <div v-else>
+                <input type="text" v-model.trim="query" @keyup.enter="search()" 
+                    class="form-control" placeholder="Ricerca il tuo post"
+                >
+                   
+                <div class="d-flex justify-content-around pt-3">
+                    <button class="btn btn-success" @click="search()">Cerca</button>
+                    <button class="btn btn-danger" @click="create_search = false">Annulla</button>
+                </div>
+            </div>
+
             <div v-if="photos.length > 0">
                 <div class="col-12 p-4" v-for="photo in photos" :key="photo.id" :class="photo.visible ? '' : 'd-none'">
                     <h3>{{ photo.title }}</h3>
@@ -88,6 +101,7 @@ export default {
         photos: [],
         query: '',
         comment_create: {text: ''},
+        create_search: false,
         photo_id: -1
     }
   },
