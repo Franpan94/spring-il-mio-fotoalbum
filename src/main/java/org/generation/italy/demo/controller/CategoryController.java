@@ -34,7 +34,7 @@ public class CategoryController {
 		List<Category> categories = categoryService.findAllWithFoto();
 		model.addAttribute("categories", categories);
 		
-		return "Categories";
+		return "Categories/CategoryIndex";
 	}
     
 	@GetMapping("/admin/create")
@@ -46,7 +46,7 @@ public class CategoryController {
 		List<Foto> photos = fotoService.findAll();
 		model.addAttribute("photos", photos);
 		
-		return "CategoryCreate";
+		return "Categories/CategoryCreate";
 	}
 	
 	@PostMapping("/admin/store")
@@ -88,7 +88,7 @@ public class CategoryController {
 		Category category = categoryService.findById(id);
 		model.addAttribute("category", category);
 		
-		return "CategoryEdit";
+		return "Categories/CategoryEdit";
 	}
 	
 	@PostMapping("/admin/update/{id}")

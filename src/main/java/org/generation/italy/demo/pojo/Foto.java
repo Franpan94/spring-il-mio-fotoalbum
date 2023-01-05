@@ -2,6 +2,8 @@ package org.generation.italy.demo.pojo;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.URL;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,6 +37,7 @@ public class Foto {
 	
 	@NotEmpty(message = "L'immagine deve contenere qualcosa")
 	@Size(min = 5, message = "L' immagine deve contenere almeno 5 caratteri")
+	@URL(message = "L'URL dell'immagine deve essere valido")
 	@Column
 	private String url;
 	

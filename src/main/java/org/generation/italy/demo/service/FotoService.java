@@ -28,6 +28,10 @@ public class FotoService {
     	return fotoRepo.findAll();
     }
    
+    public List<Foto> findByVisible(){
+    	
+    	return fotoRepo.findByVisibleTrue();
+    }
     
     public Foto findById(int id) {
     	

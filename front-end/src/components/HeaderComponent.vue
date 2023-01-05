@@ -1,6 +1,6 @@
 <template>
   <header class="d-flex justify-content-around p-3 text-white fs-3">
-    <span>Clicca <a class="text-white" href="http://localhost:8080/">qui</a> per il BackOffice</span>
+    <span>Clicca <a class="text-white" href="http://localhost:8080/">qui</a> per accedere alle foto e alle categorie</span>
   </header>
 </template>
 

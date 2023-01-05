@@ -22,6 +22,7 @@ public class SecurityConf {
 				.requestMatchers("/*/admin", "/*/admin/**").hasAuthority("ADMIN")	
 				.requestMatchers("/**").permitAll()
 			.and().formLogin()
+			.loginPage("/login")
 			.and().logout()
 		;
 

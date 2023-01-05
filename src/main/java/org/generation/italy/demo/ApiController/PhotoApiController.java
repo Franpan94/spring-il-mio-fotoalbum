@@ -22,7 +22,7 @@ public class PhotoApiController {
 	@GetMapping("/all")
 	public List<Foto> getPhotos(){
 		
-		List<Foto> photos = fotoService.findAll();
+		List<Foto> photos = fotoService.findByVisible();
 		
 		return photos;
 	}
@@ -32,7 +32,7 @@ public class PhotoApiController {
 		
 		List<Foto> photos = null;
 		
-		if(query == null) photos = fotoService.findAll();
+		if(query == null) photos = fotoService.findByVisible();
 		else photos = fotoService.findByTitleOrTag(query, query);	
 		
 		return photos;

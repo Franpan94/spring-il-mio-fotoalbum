@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/photo")
 public class PhotoController {
 	
 	@Autowired
@@ -29,31 +29,25 @@ public class PhotoController {
 	
 	@Autowired CategoryService categoryService;
 	
-	@GetMapping
-	public String getHome() {
-		
-		return "Home";
-	}
-	
-	@GetMapping("photo/user")
+	@GetMapping("/user")
 	public String getPhotos(Model model) {
 		
 		List<Foto> photos = fotoService.findAll();
 		model.addAttribute("photos", photos);
 		
-		return "FotoIndex";
+		return "Photos/PhotoIndex";
 	}
 	
-	@GetMapping("photo/user/{id}")
+	@GetMapping("/user/{id}")
 	public String show(@PathVariable("id") int id, Model model) {
 		
 		Foto photo = fotoService.findById(id);
         model.addAttribute("photo", photo);
 		
-		return "FotoShow";
+		return "Photos/PhotoShow";
 	}
 	
-	@GetMapping("photo/admin/create")
+	@GetMapping("/admin/create")
 	public String create(Model model) {
 		
 		Foto photo = new Foto();
@@ -62,10 +56,10 @@ public class PhotoController {
 		List<Category> categories = categoryService.findAllWithFoto();
 		model.addAttribute("categories", categories);
 		
-		return "FotoCreate";
+		return "Photos/PhotoCreate";
 	}
 	
-	@PostMapping("photo/admin/store")
+	@PostMapping("/admin/store")
 	public String store(@Valid @ModelAttribute("photo") Foto photo,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
@@ -90,7 +84,7 @@ public class PhotoController {
 		return "redirect:/photo/user";
 	}
 	
-	@GetMapping("photo/admin/edit/{id}")
+	@GetMapping("/admin/edit/{id}")
 	public String edit(@PathVariable("id") int id, Model model) {
 		
 		Foto photo = fotoService.findById(id);
@@ -99,11 +93,11 @@ public class PhotoController {
 		List<Category> categories = categoryService.findAllWithFoto();
 		model.addAttribute("categories", categories);
 		
-		return "FotoEdit";
+		return "Photos/PhotoEdit";
 	}
 	
 
-	@PostMapping("photo/admin/update")
+	@PostMapping("/admin/update")
 	public String update(@Valid Foto photo,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
@@ -128,7 +122,7 @@ public class PhotoController {
 		return "redirect:/photo/user";
 	}
 	
-	@GetMapping("photo/admin/delete/{id}")
+	@GetMapping("/admin/delete/{id}")
 	public String delete(@PathVariable("id") int id, 
 			             RedirectAttributes redirectAttributes) {
 		
@@ -146,7 +140,7 @@ public class PhotoController {
 		return "redirect:/photo/user";
 	}
 	
-	@GetMapping("photo/user/search")
+	@GetMapping("/user/search")
 	public String search(Model model, 
 			             @RequestParam(name = "name", required = false) String query ) {
 		
@@ -158,7 +152,7 @@ public class PhotoController {
 		model.addAttribute("photos", photos);
 			
 		
-		return "FotoSearch";
+		return "Photos/PhotoSearch";
 		
 	}
 }
