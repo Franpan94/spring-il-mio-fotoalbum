@@ -18,7 +18,7 @@
    <div class="row">
       <div class="col">
           
-          <form method="POST" th:action="@{/category/admin/store}" th:object="${category}">
+          <form method="POST" th:action="@{/category/superadmin/store}" th:object="${category}">
         
              <label for="exampleInputEmail1" class="form-label">Nome</label>
              <input type="text" name="name" class="form-control" id="exampleInputEmail1" 
@@ -39,12 +39,18 @@
                   </div>
              
              <div class="pt-3 text-center">
+				 
                    <button type="submit" class="btn btn-primary text-white">Aggiungi</button>
-                   <button class="btn btn-success text-white"> 
-                      <a style="text-decoration: none" href="/category/user" class="text-white">HomePage categorie</a>
-                  </button>
+                   
              </div>
           </form>
+          
+          <div class="text-center pt-2">
+			<button class="btn btn-success text-white"> 
+               <a style="text-decoration: none" href="/category/superadmin" class="text-white">HomePage Categorie</a>
+            </button>
+		  </div>
+		  
       </div>
    </div>
 </div>

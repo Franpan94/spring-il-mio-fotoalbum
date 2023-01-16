@@ -11,6 +11,6 @@ public class RedirectController {
 	@GetMapping
 	public String goPhoto() {
 		
-		return "redirect:/photo/user";
+		return "redirect:/photo/superadmin";
 	}
 }

@@ -28,7 +28,7 @@ public class CategoryController {
 	@Autowired 
 	private CategoryService categoryService;
 	
-	@GetMapping("/user")
+	@GetMapping("/superadmin")
 	public String getCategories(Model model) {
 		
 		List<Category> categories = categoryService.findAllWithFoto();
@@ -37,7 +37,7 @@ public class CategoryController {
 		return "Categories/CategoryIndex";
 	}
     
-	@GetMapping("/admin/create")
+	@GetMapping("/superadmin/create")
 	public String create(Model model) {
 		
 		Category category = new Category();
@@ -49,14 +49,14 @@ public class CategoryController {
 		return "Categories/CategoryCreate";
 	}
 	
-	@PostMapping("/admin/store")
+	@PostMapping("/superadmin/store")
 	public String store(@Valid Category category,
 				BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 			
 			if(bindingResult.hasErrors()) {
 				
 				redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-				return "redirect:/category/admin/create";
+				return "redirect:/category/superadmin/create";
 			}
 			
 			try {
@@ -73,12 +73,13 @@ public class CategoryController {
 				
 				String message = "Il nome deve essere unico";
 				redirectAttributes.addFlashAttribute("message", message);
-				return "redirect:/ingredient/admin/create";
+				
+				return "redirect:/category/superadmin/create";
 			}
-			return "redirect:/category/user";
+			return "redirect:/category/superadmin";
 	}
 	
-	@GetMapping("/admin/edit/{id}")
+	@GetMapping("/superadmin/edit/{id}")
 	public String edit(@PathVariable("id") int id, Model model) {
 		
 		List<Foto> photos = fotoService.findAll();
@@ -91,7 +92,7 @@ public class CategoryController {
 		return "Categories/CategoryEdit";
 	}
 	
-	@PostMapping("/admin/update/{id}")
+	@PostMapping("/superadmin/update/{id}")
 	public String update(@PathVariable("id") int id, @Valid Category category,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
@@ -99,7 +100,7 @@ public class CategoryController {
 			
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 			
-			return "redirect:/category/admin/edit/" + id;
+			return "redirect:/category/superadmin/edit/" + id;
 		}
 		
 		try {
@@ -119,13 +120,13 @@ public class CategoryController {
 
 			String message = "Il nome deve essere unico";
 			redirectAttributes.addFlashAttribute("message", message);
-			return "redirect:/category/admin/edit/" + id;
+			return "redirect:/category/superadmin/edit/" + id;
 		}
 		
-		return "redirect:/category/user";
+		return "redirect:/category/superadmin";
 	}
 	
-	@GetMapping("/admin/delete/{id}")
+	@GetMapping("/superadmin/delete/{id}")
 	public String delete(@PathVariable("id") int id,
 			RedirectAttributes redirectAttributes) {
 		
@@ -143,6 +144,6 @@ public class CategoryController {
 			redirectAttributes.addFlashAttribute("message", message);
 		}
 		
-		return "redirect:/category/user";
+		return "redirect:/category/superadmin";
 	}
 }

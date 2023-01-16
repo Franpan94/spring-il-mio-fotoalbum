@@ -13,12 +13,12 @@
    <td class="text-end" th:fragment="buttons()">
        <button class="btn btn-warning">
            <a style="text-decoration: none" class="text-dark ms_text_decoration" 
-              th:href="@{/photo/admin/edit/{id} (id=*{id})}" sec:authorize="hasAuthority('ADMIN')">Modifica la tua foto
+              th:href="@{/photo/superadmin/edit/{id} (id=*{id})}" sec:authorize="hasAuthority('ADMIN')">Modifica la tua foto
            </a>
         </button>
         <button class="btn btn-danger">
            <a style="text-decoration: none" class="text-white ms_text_decoration" 
-              th:href="@{/photo/admin/delete/{id} (id=*{id})}" sec:authorize="hasAuthority('ADMIN')">Elimina</a>
+              th:href="@{/photo/superadmin/delete/{id} (id=*{id})}" sec:authorize="hasAuthority('ADMIN')">Elimina</a>
          </button>
      </td>
    

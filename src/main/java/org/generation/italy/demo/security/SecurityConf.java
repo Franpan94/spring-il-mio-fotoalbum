@@ -18,8 +18,9 @@ public class SecurityConf {
     public SecurityFilterChain getFilterChain(HttpSecurity http) throws Exception {
 		
 		http.csrf().disable().authorizeHttpRequests()
-				.requestMatchers("/*/user", "/*/user/**").hasAnyAuthority("USER", "ADMIN")
-				.requestMatchers("/*/admin", "/*/admin/**").hasAuthority("ADMIN")	
+				.requestMatchers("/*/user", "/*/user/**").hasAuthority("USER")
+				.requestMatchers("/*/admin", "/*/admin/**").hasAuthority("ADMIN")
+				.requestMatchers("/*/superadmin", "/*/superadmin/**").hasAnyAuthority("USER", "ADMIN")
 				.requestMatchers("/**").permitAll()
 			.and().formLogin()
 			.loginPage("/login")

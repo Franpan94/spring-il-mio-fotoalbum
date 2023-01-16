@@ -29,7 +29,7 @@ public class PhotoController {
 	
 	@Autowired CategoryService categoryService;
 	
-	@GetMapping("/user")
+	@GetMapping("/superadmin")
 	public String getPhotos(Model model) {
 		
 		List<Foto> photos = fotoService.findAll();
@@ -38,7 +38,7 @@ public class PhotoController {
 		return "Photos/PhotoIndex";
 	}
 	
-	@GetMapping("/user/{id}")
+	@GetMapping("/superadmin/{id}")
 	public String show(@PathVariable("id") int id, Model model) {
 		
 		Foto photo = fotoService.findById(id);
@@ -47,7 +47,7 @@ public class PhotoController {
 		return "Photos/PhotoShow";
 	}
 	
-	@GetMapping("/admin/create")
+	@GetMapping("/superadmin/create")
 	public String create(Model model) {
 		
 		Foto photo = new Foto();
@@ -59,7 +59,7 @@ public class PhotoController {
 		return "Photos/PhotoCreate";
 	}
 	
-	@PostMapping("/admin/store")
+	@PostMapping("/superadmin/store")
 	public String store(@Valid @ModelAttribute("photo") Foto photo,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
@@ -67,7 +67,7 @@ public class PhotoController {
 			
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 			
-			return "redirect:/photo/admin/create";
+			return "redirect:/photo/superadmin/create";
 		}
 		
         try {
@@ -78,13 +78,14 @@ public class PhotoController {
 			
 			String message = "Il nome deve essere unico";
 			redirectAttributes.addFlashAttribute("message", message);
-			return "redirect:/photo/admin/create";
+			
+			return "redirect:/photo/superadmin/create";
 		}
 		
-		return "redirect:/photo/user";
+		return "redirect:/photo/superadmin";
 	}
 	
-	@GetMapping("/admin/edit/{id}")
+	@GetMapping("/superadmin/edit/{id}")
 	public String edit(@PathVariable("id") int id, Model model) {
 		
 		Foto photo = fotoService.findById(id);
@@ -97,7 +98,7 @@ public class PhotoController {
 	}
 	
 
-	@PostMapping("/admin/update")
+	@PostMapping("/superadmin/update")
 	public String update(@Valid Foto photo,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
@@ -105,7 +106,7 @@ public class PhotoController {
 			
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 			
-			return "redirect:/photo/admin/edit/" + photo.getId();
+			return "redirect:/photo/superadmin/edit/" + photo.getId();
 		}
 		
         try {
@@ -116,13 +117,14 @@ public class PhotoController {
 			
 			String message = "Il nome deve essere unico";
 			redirectAttributes.addFlashAttribute("message", message);
-			return "redirect:/photo/admin/edit/" + photo.getId();
+			
+			return "redirect:/photo/superadmin/edit/" + photo.getId();
 		}
 		
-		return "redirect:/photo/user";
+		return "redirect:/photo/superadmin";
 	}
 	
-	@GetMapping("/admin/delete/{id}")
+	@GetMapping("/superadmin/delete/{id}")
 	public String delete(@PathVariable("id") int id, 
 			             RedirectAttributes redirectAttributes) {
 		
@@ -137,10 +139,10 @@ public class PhotoController {
 			redirectAttributes.addFlashAttribute("message", message);
 		}
 		
-		return "redirect:/photo/user";
+		return "redirect:/photo/superadmin";
 	}
 	
-	@GetMapping("/user/search")
+	@GetMapping("/superadmin/search")
 	public String search(Model model, 
 			             @RequestParam(name = "name", required = false) String query ) {
 		

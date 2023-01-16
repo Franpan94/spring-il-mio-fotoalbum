@@ -19,7 +19,7 @@
 </div>
 <div class="text-center pb-3">
       <button class="btn btn-primary">
-        <a style="text-decoration: none" class="text-white" href="/category/admin/create"
+        <a style="text-decoration: none" class="text-white" href="/category/superadmin/create"
            sec:authorize="hasAuthority('ADMIN')">Aggiungi le tue nuove categorie
         </a>
       </button>
@@ -52,12 +52,12 @@
                     <td class="text-end">
                        <button class="btn btn-warning">
                          <a style="text-decoration: none" class="text-dark ms_text_decoration" 
-                            th:href="@{/category/admin/edit/{id} (id=*{id})}"
+                            th:href="@{/category/superadmin/edit/{id} (id=*{id})}"
                             sec:authorize="hasAuthority('ADMIN')">Modifica le tue categorie</a>
                        </button>
                        <button class="btn btn-danger">
                          <a style="text-decoration: none" class="text-white ms_text_decoration" 
-                            th:href="@{/category/admin/delete/{id} (id=*{id})}"
+                            th:href="@{/category/superadmin/delete/{id} (id=*{id})}"
                             sec:authorize="hasAuthority('ADMIN')">Elimina</a>
                        </button>
                      </td>
@@ -73,7 +73,7 @@
    <div class="d-flex justify-content-around p-3">
 
         <button class="btn btn-dark">
-          <a style="text-decoration: none" class="text-white" href="/photo/user">Foto</a>
+          <a style="text-decoration: none" class="text-white" href="/photo/superadmin">Foto</a>
         </button>
      
         <button th:replace="Frag :: logout()"></button>
